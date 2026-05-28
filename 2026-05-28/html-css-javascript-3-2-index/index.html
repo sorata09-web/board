@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15年で一億年返さないといけない</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="title-block">
+        <span class="eyebrow">NEON INFILTRATION BOARD GAME</span>
+        <h1>15年で一億年返さないといけない</h1>
+      </div>
+      <button id="resetButton" class="secondary">リセット</button>
+    </header>
+
+    <section id="alertBanner" class="alert-banner" aria-live="polite">
+      <span>ALERT</span>
+      <strong>警戒フェーズ</strong>
+      <em id="alertRemainText">残り5ラウンド</em>
+    </section>
+
+    <section class="status-panel" aria-label="ゲーム状況">
+      <div>
+        <span class="label">フェーズ</span>
+        <strong id="phaseText"></strong>
+      </div>
+      <div>
+        <span class="label">ラウンド</span>
+        <strong id="roundText"></strong>
+      </div>
+      <div>
+        <span class="label">現在プレイヤー</span>
+        <strong id="currentPlayerText"></strong>
+      </div>
+      <div>
+        <span class="label">結果</span>
+        <strong id="resultText">進行中</strong>
+      </div>
+    </section>
+
+    <section class="layout">
+      <section class="board-panel" aria-label="盤面">
+        <div class="board-head">
+          <div>
+            <h2>作戦区域</h2>
+            <p>移動を選択すると、移動可能なマスをクリックできます。</p>
+          </div>
+          <div class="legend" aria-label="凡例">
+            <span><i class="legend-dot destination-dot"></i>目的地</span>
+            <span><i class="legend-dot escape-dot"></i>脱出</span>
+            <span><i class="legend-dot special-dot"></i>特殊</span>
+          </div>
+        </div>
+        <div id="board" class="board" aria-label="5x5 board"></div>
+      </section>
+
+      <aside class="side-panel">
+        <section class="player-card">
+          <h2 id="playerInfoTitle"></h2>
+          <dl class="info-list">
+            <div>
+              <dt>秘密目的地</dt>
+              <dd id="secretDestinationText"></dd>
+            </div>
+            <div>
+              <dt>任務完了</dt>
+              <dd id="missionText"></dd>
+            </div>
+            <div>
+              <dt>監視残り</dt>
+              <dd id="surveillanceText"></dd>
+            </div>
+            <div>
+              <dt>偽装残り</dt>
+              <dd id="disguiseText"></dd>
+            </div>
+            <div>
+              <dt>告発</dt>
+              <dd id="accuseText"></dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="actions">
+          <div class="panel-title-row">
+            <h2>行動</h2>
+            <span id="actionHint" class="action-hint"></span>
+          </div>
+          <div class="button-grid">
+            <button id="moveButton" data-action="move">移動</button>
+            <button id="missionButton" data-action="mission">任務実行</button>
+            <button id="surveillanceButton" data-action="surveillance">監視</button>
+            <button id="disguiseButton" data-action="disguise">偽装</button>
+            <button id="accuseButton" data-action="accuse">告発</button>
+            <button id="escapeButton" data-action="escape">脱出</button>
+            <button id="memoButton" data-action="memo">メモモード OFF</button>
+          </div>
+
+          <div id="moveControls" class="sub-controls hidden" aria-label="移動方向">
+            <button data-dir="up">↑</button>
+            <button data-dir="left">←</button>
+            <button data-dir="right">→</button>
+            <button data-dir="down">↓</button>
+          </div>
+
+          <div id="accuseControls" class="sub-controls hidden">
+            <select id="accuseSelect" aria-label="告発する目的地"></select>
+            <button id="confirmAccuseButton">宣言</button>
+          </div>
+
+          <div id="memoControls" class="memo-controls hidden">
+            <p id="memoTargetText">目的地候補マスを選択してください</p>
+            <div id="memoPinButtons" class="memo-pin-buttons" aria-label="メモピン選択">
+              <button data-pin="本命？" class="pin-choice pin-main">本命？</button>
+              <button data-pin="ダミー？" class="pin-choice pin-dummy">ダミー？</button>
+              <button data-pin="低確率" class="pin-choice pin-low">低確率</button>
+              <button data-pin="保留" class="pin-choice pin-hold">保留</button>
+              <button data-pin="削除" class="pin-choice pin-delete">削除</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="logs">
+          <div class="log-panel public-log-panel">
+            <h2>公開ログ</h2>
+            <ol id="publicLog" class="log-list"></ol>
+          </div>
+          <div class="log-panel secret-log-panel">
+            <h2>秘密ログ（現在プレイヤーのみ）</h2>
+            <ol id="secretLog" class="log-list"></ol>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section id="debugPanel" class="debug-panel hidden" aria-label="開発用状態表示">
+      <h2>開発用状態表示</h2>
+      <pre id="debugContent"></pre>
+    </section>
+
+    <div id="resultOverlay" class="result-overlay hidden" role="dialog" aria-live="assertive" aria-label="ゲーム結果">
+      <div class="result-modal">
+        <span>MISSION REPORT</span>
+        <strong id="resultOverlayText"></strong>
+        <button id="overlayResetButton">もう一度遊ぶ</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
